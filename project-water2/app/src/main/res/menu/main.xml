@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_info"
+        android:orderInCategory="100"
+        android:title="info"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_alarm"
+        android:orderInCategory="100"
+        android:title="alarm"
+        android:icon="@drawable/ic_bell"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_stats"
+        android:orderInCategory="100"
+        android:title="stats"
+        android:icon="@drawable/ic_stats"
+        app:showAsAction="always" />
+</menu>

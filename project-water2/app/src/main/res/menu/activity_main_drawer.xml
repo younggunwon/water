@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_ccup"
+            android:icon="@drawable/ic_ccup"
+            android:title="컵 바꾸기" />
+        <item
+            android:id="@+id/nav_alarm"
+            android:icon="@drawable/ic_bell"
+            android:title="알람 설정" />
+        <item
+            android:id="@+id/nav_stats"
+            android:icon="@drawable/ic_stats"
+            android:title="통계" />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_info"
+            android:title="개인정보 설정" />
+        <item
+            android:id="@+id/nav_challenge"
+            android:icon="@drawable/ic_info"
+            android:title="도전 과제" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+        </menu>
+    </item>
+
+</menu>
