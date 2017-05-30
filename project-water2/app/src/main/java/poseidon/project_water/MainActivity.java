@@ -1,6 +1,7 @@
 package poseidon.project_water;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,10 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.app.FragmentManager;
+import android.view.View;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.lang.reflect.Field;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,26 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        try {
+            Field f = toolbar.getClass().getDeclaredField("mTitleTextView");
+            f.setAccessible(true);
+            TextView titleTextView = (TextView) f.get(toolbar);
+            titleTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    MainFragment mft = new MainFragment();
+                    ft.replace(R.id.layout_main, mft);
+                    ft.commit();
+                    fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
+            });
+        } catch (NoSuchFieldException e) {
+        } catch (IllegalAccessException e) {
+        }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -64,7 +87,7 @@ public class MainActivity extends AppCompatActivity
                 fragment = new StatsFragment();
                 break;
             case R.id.action_alarm:
-
+                fragment = new AlarmFragment();
                 break;
             default:
         }
@@ -87,17 +110,15 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_ccup) {
             // Handle the camera action
         } else if (id == R.id.nav_alarm) {
-
+            fragment = new AlarmFragment();
         } else if (id == R.id.nav_stats) {
             fragment = new StatsFragment();
-
         } else if (id == R.id.nav_info) {
             fragment = new InfoFragment();
-
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_challenge) {
-
+            fragment = new ChallengeFragment();
         }
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

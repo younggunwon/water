@@ -11,7 +11,7 @@ import android.view.ViewGroup;
  * Created by younggun on 2017-05-22.
  */
 
-public class AlramFragment extends Fragment {
+public class AlarmFragment extends Fragment {
 
     @Nullable
     @Override
