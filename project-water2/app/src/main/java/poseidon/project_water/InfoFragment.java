@@ -1,6 +1,8 @@
 package poseidon.project_water;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -32,8 +34,16 @@ public class InfoFragment extends Fragment {
                     int need = Integer.parseInt(et_weight.getText().toString()) * 30;
                     int cup = Integer.parseInt(et_cup.getText().toString());
                     //데이터베이스에 need와 cup 저장하기
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    MainFragment mft = new MainFragment();
+                    ft.replace(R.id.layout_main, mft);
+                    ft.commit();
                 }
+
             }
+
+
         });
         return view;
     }

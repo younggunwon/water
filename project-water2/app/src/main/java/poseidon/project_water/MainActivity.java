@@ -1,15 +1,19 @@
 package poseidon.project_water;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } catch (IllegalAccessException e) {
         }
 
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -64,7 +66,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+
+            if(fm.findFragmentByTag("main") != fm.findFragmentById(R.id.layout_main)) {
+                MainFragment mft = new MainFragment();
+                ft.replace(R.id.layout_main, mft, "main");
+                ft.commit();
+                return;
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -95,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.layout_main, fragment);
-        ft.addToBackStack(null);
         ft.commit();
 
 
@@ -108,7 +119,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         Fragment fragment = new MainFragment();
         if (id == R.id.nav_ccup) {
-            // Handle the camera action
+            CCupDialog dialog = new CCupDialog(this);
+            dialog.show();
         } else if (id == R.id.nav_alarm) {
             fragment = new AlarmFragment();
         } else if (id == R.id.nav_stats) {
@@ -123,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.layout_main, fragment);
-        ft.addToBackStack(null);
         ft.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -135,7 +146,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         MainFragment mft = new MainFragment();
-        ft.add(R.id.layout_main, mft);
+        ft.add(R.id.layout_main, mft, "main");
+        if(true) {
+            Fragment fragment = new InfoFragment();
+            ft.replace(R.id.layout_main,fragment);
+        }
         ft.commit();
+    }
+
+    class CCupDialog extends Dialog {
+
+        public CCupDialog(@NonNull Context context) {
+            super(context);
+            setContentView(R.layout.dialog_ccup);
+        }
     }
 }

@@ -1,8 +1,10 @@
 package poseidon.project_water;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +37,8 @@ public class MainFragment extends Fragment {
         v.findViewById(R.id.iv_ccup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CCupDialog dialog = new CCupDialog(getActivity());
+                dialog.show();
                 //다이얼로그 띄우기
             }
         });
@@ -117,6 +121,14 @@ public class MainFragment extends Fragment {
             tv_todayList_drink.setText(Integer.toString(_list.get(position).getDrinkWater()) + "ml");
             tv_todayList_time.setText(_list.get(position).getTime());
             return v;
+        }
+    }
+
+    class CCupDialog extends Dialog {
+
+        public CCupDialog(@NonNull Context context) {
+            super(context);
+            setContentView(R.layout.dialog_ccup);
         }
     }
 }
