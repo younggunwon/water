@@ -1,6 +1,8 @@
 package poseidon.project_water;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -22,15 +24,29 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
         View v = inflater.inflate(R.layout.fragment_alram, container, false);
         layout_alarm = (LinearLayout)v.findViewById(R.id.layout_alarm);
         ((Switch)v.findViewById(R.id.switch_alarm)).setOnClickListener(this);
+        v.findViewById(R.id.layout_alarm).setVisibility(View.GONE);
+        v.findViewById(R.id.bt_alarmSave).setOnClickListener(this);
         return v;
     }
 
     @Override
     public void onClick(View v) {
-        if(((Switch)v).isChecked()) {
-            layout_alarm.setVisibility(View.VISIBLE);
-        } else {
-            layout_alarm.setVisibility(View.GONE);
+        switch(v.getId()) {
+            case R.id.switch_alarm:
+                if(((Switch)v).isChecked()) {
+                    layout_alarm.setVisibility(View.VISIBLE);
+                } else {
+                    layout_alarm.setVisibility(View.GONE);
+                }
+                break;
+            case R.id.bt_alarmSave:
+            case R.id.bt_alarmCancel:
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                MainFragment mft = new MainFragment();
+                ft.replace(R.id.layout_main, mft, "main");
+                ft.commit();
+                break;
         }
     }
 }
